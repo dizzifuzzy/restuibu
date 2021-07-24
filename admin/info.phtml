@@ -1,0 +1,45 @@
+            <div class="col-lg-6">
+
+              <!-- Basic Card Example -->
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-info">Ubah Data Website</h6>
+                </div>
+                <div class="card-body">
+              <form class="user" action="" method="post" enctype="multipart/form-data">
+                <?php if($_POST['nama_yayasan']){
+  $nama_yayasan    = $_POST['nama_yayasan'];
+  $tentang_yayasan    = $_POST['tentang_yayasan'];
+  $alamat_yayasan    = $_POST['alamat_yayasan'];
+  $telp_yayasan    = $_POST['tlp_yayasan'];
+  $submit = $conn->query("UPDATE info SET nama_yayasan='$nama_yayasan', tentang_yayasan='$tentang_yayasan', alamat_yayasan='$alamat_yayasan', tlp_yayasan='$telp_yayasan' WHERE id_info='1'");
+  echo '            <script>
+                window.alert("data berhasil diubah.");
+                window.location = "pengaturan.php";
+            </script>';
+}?>
+                <div class="form-group">
+                  <label class="col-sm-12 control-label">Nama Yayasan :</label>
+                  <input type="text" name="nama_yayasan" class="form-control form-control-user" value="<?=$info['nama_yayasan'];?>">
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-12 control-label">Tentang Yayasan :</label>
+                  <textarea name="tentang_yayasan" class="form-control form-control-user"><?=$info['tentang_yayasan'];?></textarea>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-12 control-label">Alamat Yayasan :</label>
+                  <textarea name="alamat_yayasan" class="form-control form-control-user"><?=$info['alamat_yayasan'];?></textarea>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-12 control-label">Telp Yayasan :</label>
+                  <input type="int" name="tlp_yayasan" class="form-control form-control-user" value="<?=$info['tlp_yayasan'];?>">
+                </div>
+                <center>
+                    <button type="submit" class="btn btn-info">Simpan</button>
+                    <a href="anak.php" class="btn btn-info">Kembali</a>
+                </center>
+              </form>                
+          </div>
+              </div>
+
+            </div>

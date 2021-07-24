@@ -1,0 +1,195 @@
+  <footer>
+    <div class="inner-footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 f-about">
+            <a href="index.php"><h1><?=$info['nama_yayasan'];?></h1></a>
+            <p><?=$info['tentang_yayasan'];?>
+            </p>
+          </div>
+          <div class="col-md-4"></div>
+          <div class="col-md-4 f-contact">
+            <h3 class="widgetheading">Kontak Kami</h3>
+            <p><i class="fa fa-phone"></i>  <?=$info['tlp_yayasan'];?></p>
+            <p><i class="fa fa-home"></i> <?=$info['alamat_yayasan'];?></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="last-div">
+      <div class="container">
+        <div class="row">
+          <div class="copyright">
+            &copy; <?=$info['nama_yayasan'];?>. All Rights Reserved
+            <div class="credits">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="row">
+          <ul class="social-network">
+            <li><a href="#" data-placement="top" title="Facebook"><i class="fa fa-facebook fa-1x"></i></a></li>
+            <li><a href="#" data-placement="top" title="Twitter"><i class="fa fa-twitter fa-1x"></i></a></li>
+            <li><a href="#" data-placement="top" title="Linkedin"><i class="fa fa-linkedin fa-1x"></i></a></li>
+            <li><a href="#" data-placement="top" title="Pinterest"><i class="fa fa-pinterest fa-1x"></i></a></li>
+            <li><a href="#" data-placement="top" title="Google plus"><i class="fa fa-google-plus fa-1x"></i></a></li>
+          </ul>
+        </div>
+      </div>
+
+      <a href="#" class="scrollup"><i class="fa fa-chevron-up"></i></a>
+
+
+    </div>
+  </footer>
+  <div id="login" class="modal fade" role="dialog">
+  <div class="modal-dialog" style="width:400px;">
+
+    <!-- Modal content-->
+    <div class="modal-content ">
+      <div class="modal-header" style="background-color:#264181;">
+        <h4 class="modal-title" style="color:white; text-align: center;">Login</h4>
+      </div>
+      <div class="modal-body">
+        <form method="post">
+                    <?php
+        if($_POST['username']){
+            $username   = $_POST['username'];
+            $userpass   = $_POST['password'];
+            $cek_login = $conn->query("SELECT id_petugas,username_petugas,password_petugas FROM petugas WHERE username_petugas = '$username' AND password_petugas = '$userpass'");
+            $z = $cek_login->fetch_assoc();
+            $password = $z['password_petugas'];
+            if($cek_login->num_rows==1){
+              if ($userpass == $password) {
+                $_SESSION['username'] = $username;
+                $_SESSION['password'] = $userpass;
+                $_SESSION['user']   = $z['id_petugas'];
+                echo "<script>alert('Login Berhasil!'); window.location.href='admin/index.php'</script>";
+            }else{
+                echo "<script>alert('Username & Password Salah !!!'); window.location.href='index.php'</script>";
+            }
+          }else{
+            echo "<script>alert('Username & Password Salah !!!'); window.location.href='index.php'</script>";
+          }
+        }
+        ?>
+        <div class="form-group">
+                      <input type="username" class="form-control form-control-user" name="username" placeholder="Username">
+                    </div>
+                    <div class="form-group">
+                      <input type="password" class="form-control form-control-user" name="password" id="exampleInputPassword" placeholder="Password">
+                    </div>
+                    <div class="form-group">
+                    </div>
+                    <center>
+                    <button type="submit" style="background-color:#264181; color:white;" class="btn">Login</button>
+                    </center>
+                    </form>
+      </div>
+    </div>
+
+  </div>
+</div>
+  <div id="donasi" class="modal fade" role="dialog">
+  <div class="modal-dialog" style="width:900px;">
+
+    <!-- Modal content-->
+    <div class="modal-content ">
+      <div class="modal-header" style="background-color:#264181;">
+        <h4 class="modal-title" style="color:white; text-align: center;">Donasi</h4>
+      </div>
+      <div class="modal-body">
+        <p><b>PERTAMA</b><br>
+Dengan mentranfer ke rekening Bank di nomer rekening :<br>
+MANDIRI: 140-00-1596894-5 A/N. YAYASAN KUN FAYAKUN<br>
+(mohon untuk mencantumkan nama bila berkenan)</p>
+
+<p><b>KEDUA</b><br>
+Dengan menyerahkan langsung kepada baik berupa uang atau barang ke alamat :<br>Jl.Raya Pandugo Timur No. 7 - 8 Rungkut - Surabaya. Jawa Timur</p>
+
+<p><b>KETIGA</b><br>
+Bagi calon donatur yng masih dalam lingkup surabaya, kami siap untuk mengambil ke tempat / lokasi yang sekiranya masih bisa kami jangkau, mohon untuk menginformasikan alamat dan nomer telpon melalui email kami :donasi@yayasankunfayakun.com</p>
+
+<p>Semoga apa yang akan Bapak / Ibu sumbangkan kepada yayasan kami akan senantiasa di ridhoi oleh allah SWT, akan membawa barokah bagi keluarga dan semua umat.  Semoga akan dilipat gandakan pahala dan rezekinya dari sumber yang tidak disangka sangka datangnya… AMINN.</p>
+<p><b>KONFIRMASI DONASI : </b></p>
+          <form action="" method="post" role="form" enctype="multipart/form-data" class="contactForm">
+<?php if($_POST['nama']){
+                  $nama = $_POST['nama'];
+                  $email = $_POST['email'];
+                  $hp = $_POST['telp'];
+                  $rekdonat = $_POST['rekdonatur'];
+                  $rekami = $_POST['rekpenerima'];
+                  $nominal = $_POST['nominal'];
+                  $catatan = $_POST['catatan'];
+                  $idx = strpos($_FILES['gambar']['name'],'.');
+                  $ext = substr($_FILES['gambar']['name'],$idx);
+                  $idpetugas = $_SESSION['user'];
+                  $file_ext   = strtolower(end(explode('.',$_FILES['gambar']['name'])));
+                  $file_name = $nama . $ext;
+                  $output_dir = "buktitf/";
+                  if(isset($_FILES["gambar"])){
+                    $allow      = array("jpg","png","jpeg","svg");
+                    if (in_array($file_ext,$allow)) {
+                    if ($_FILES["gambar"]["error"] > 0){
+                      echo "<script>alert('Gagal untuk unggah gambar !!!'); window.location.href='index.php'</script>";
+                    }else{
+                      move_uploaded_file($_FILES["gambar"]["tmp_name"],$output_dir.$file_name);
+                      $conn->query("INSERT INTO donatur (nama_donatur,email_donatur,tlp_donatur) VALUES ('$nama','$email','$hp')");
+                      $id_donatur = $conn->insert_id;
+                      $conn->query("INSERT INTO donasi (tgl_donasi,verif_donasi,id_petugas,id_donatur) VALUES (CURRENT_TIMESTAMP,0,1,'$id_donatur')");
+                      $id_donasi = $conn->insert_id;
+                      $conn->query("INSERT INTO detail_donasi (id_donasi,nominal_detail,gambar_bukti,rekening_detail,id_rekening,catatan_detail) VALUES ('$id_donasi','$nominal','$file_name','$rekdonat','$rekami','$catatan')");
+                      echo "<script>alert('Bukti Transfer telah di kirim !!!'); window.location.href='index.php'</script>";
+                    }
+                  }else{
+                    echo "<script>alert('Format Gambar Harus JPG, PNG, JPEG, Atau SVG !!!'); window.location.href='index.php'</script>";
+                  }
+            }
+        }
+                ?>
+            <div class="form-group">
+              <label class="col-sm-12 control-label">Nama :</label>
+              <input type="text" name="nama" class="form-control"/>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-12 control-label">Email :</label>
+              <input type="email" name="email" class="form-control"/>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-12 control-label">Telp :</label>
+              <input type="number" name="telp" class="form-control"/>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-12 control-label">Rekening Pengirim (BANK-NoRek contoh : BNI-123412) :</label>
+              <input type="text" name="rekdonatur" class="form-control"/>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-12 control-label">Rekening Penerima :</label>
+              <select name="rekpenerima" class="form-control" required>
+                <?php while($rek = $rekening->fetch_array()){?>
+                  <option value="<?=$rek['id_rekening'];?>"><?=$rek['bank_rekening'];?> - <?=$rek['no_rekening'];?> - a/n <?=$rek['an_rekening'];?></option>
+                <?php } ?>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-12 control-label">Nominal (tanpa titik) :</label>
+              <input type="number" name="nominal" class="form-control"/>
+            </div>
+                <div class="form-group">
+                  <label class="col-sm-12 control-label">Bukti Transfer :</label>
+                  <input type="file" name="gambar" class="form-control">
+                </div>
+            <div class="form-group">
+              <label class="col-sm-12 control-label">Catatan :</label>
+              <textarea class="form-control" name="catatan" rows="5" ></textarea>
+            </div>
+            <div class="text-center"><button type="submit" class="btn btn-primary btn-lg">Konfirmasi</button></div>
+          </form>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -1,0 +1,50 @@
+            <div class="col-lg-6">
+
+              <!-- Basic Card Example -->
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-info">Ubah Data Petugas</h6>
+                </div>
+                <div class="card-body">
+              <form class="user" action="" method="post" enctype="multipart/form-data">
+                <?php if($_POST['nama_petugas']){
+  $nama_petugas    = $_POST['nama_petugas'];
+  $username_petugas    = $_POST['username_petugas'];
+  $password_petugas    = $_POST['password_petugas'];
+  $alamat_petugas    = $_POST['alamat_petugas'];
+  $telp_petugas    = $_POST['tlp_petugas'];
+  $submit = $conn->query("UPDATE petugas SET nama_petugas='$nama_petugas', username_petugas='$username_petugas', password_petugas='$password_petugas', alamat_petugas='$alamat_petugas', tlp_petugas='$telp_petugas' WHERE id_petugas='$idpetugas'");
+  echo '            <script>
+                window.alert("data berhasil diubah.");
+                window.location = "pengaturan.php";
+            </script>';
+}?>
+                <div class="form-group">
+                  <label class="col-sm-12 control-label">Nama Petugas :</label>
+                  <input type="text" name="nama_petugas" class="form-control form-control-user" value="<?=$petugas['nama_petugas'];?>">
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-12 control-label">Username Petugas :</label>
+                  <input type="text" name="username_petugas" class="form-control form-control-user" value="<?=$petugas['username_petugas'];?>">
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-12 control-label">Password Petugas :</label>
+                  <input type="password" name="password_petugas" class="form-control form-control-user" value="<?=$petugas['password_petugas'];?>">
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-12 control-label">Alamat Petugas :</label>
+                  <textarea name="alamat_petugas" class="form-control form-control-user"> <?=$petugas['alamat_petugas'];?></textarea>
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-12 control-label">Telp Petugas :</label>
+                  <textarea name="tlp_petugas" class="form-control form-control-user"> <?=$petugas['tlp_petugas'];?></textarea>
+                </div>
+                <center>
+                    <button type="submit" class="btn btn-info">Simpan</button>
+                    <a href="anak.php" class="btn btn-info">Kembali</a>
+                </center>
+              </form>                
+          </div>
+              </div>
+
+            </div>

@@ -1,0 +1,22 @@
+      <div class="col-md-4">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <strong>Rekening</strong>
+          </div>
+          <hr>
+          <?php 
+$rekening = $conn->query("SELECT * FROM rekening");
+while($rek = $rekening->fetch_array()){?>
+          <div class="panel-body">
+            <div class="media">
+              <p>
+                <b>a/n : <?=$rek['an_rekening'];?></b><br>
+                <b>No Rekening : <?=$rek['no_rekening'];?></b><br>
+                <b>BANK : <?=$rek['bank_rekening'];?></b><br>
+              </p>
+            </div>
+          </div>
+          <hr>
+<?php } ?>
+        </div>
+      </div>

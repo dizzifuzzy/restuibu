@@ -1,0 +1,88 @@
+            <div class="col-lg-12">
+
+              <!-- Basic Card Example -->
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <h6 class="m-0 font-weight-bold text-info">Rekening</h6>
+                </div>
+                <div class="card-body">
+              <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>Atas Nama</th>
+                      <th>Nomer Rekening</th>
+                      <th>Bank</th>
+                      <th>Edit</th>
+                    </tr>
+                  </thead>
+                  <tfoot>
+                    <tr>
+                      <th>#</th>
+                      <th>Atas Nama</th>
+                      <th>Nomer Rekening</th>
+                      <th>Bank</th>
+                      <th>Edit</th>
+                    </tr>
+                  </tfoot>
+                  <tbody>
+                    <?php while($ambil = $rekening->fetch_array()){?>
+                    <tr>
+                      <td><?=$ambil['id_rekening'];?></td>
+                      <td><?=$ambil['an_rekening'];?></td>
+                      <td><?=$ambil['no_rekening'];?></td>
+                      <td><?=$ambil['bank_rekening'];?></td>
+                      <td><a href="?hapus=<?php echo $ambil['id_rekening']; ?>">Hapus</a></td>
+                    </tr>
+                  <?php } ?>
+                  </tbody>
+                </table>
+              </div>
+              <b>Tambah Rekening :</b> 
+              <form class="user" action="" method="post" enctype="multipart/form-data">
+                <?php if($_POST['anrek']){
+                  $an_rek = $_POST['anrek'];
+                  $no_rek = $_POST['norek'];
+                  $bank = $_POST['bank'];
+                  $subm = "INSERT INTO rekening (an_rekening,no_rekening,bank_rekening) VALUES ('$an_rek','$no_rek','$bank')";
+                  $submit = $conn->query($subm);
+                    echo '            <script>
+                window.alert("rekening berhasil ditambahkan.");
+                window.location = "pengaturan.php";
+            </script>';
+
+}?>
+                <div class="form-group">
+                  <label class="col-sm-12 control-label">Atas Nama :</label>
+                  <input type="text" name="anrek" class="form-control form-control-user">
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-12 control-label">No Rekening :</label>
+                  <input type="text" name="norek" class="form-control form-control-user">
+                </div>
+                <div class="form-group">
+                  <label class="col-sm-12 control-label">Bank :</label>
+                  <input type="text" name="bank" class="form-control form-control-user">
+                </div>      
+                <center>
+                    <button type="submit" class="btn btn-info">Simpan</button>
+                    <a href="anak.php" class="btn btn-info">Kembali</a>
+                </center>
+              </form>                
+          </div>
+              </div>
+
+            </div>
+                      <?php 
+          if($_GET['hapus']){
+            $hapus = $_GET['hapus'];
+            $hapusanak = $conn->query("DELETE FROM rekening WHERE id_rekening='$hapus'");
+                    echo '
+            <script>
+                window.alert("Rekening telah dihapus.");
+                window.location = "pengaturan.php";
+            </script>
+        ';
+          }
+          ?>
